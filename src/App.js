@@ -1,15 +1,33 @@
 import './App.css';
-import { Routes, Route } from 'react-router-dom'
+import { useRoutes, Outlet } from 'react-router-dom'
 
 function App() {
-  return (
-    <Routes>
-      <Route path='/' element={<div>Home</div>}></Route>
-      <Route path='/login' element={<div>Login</div>}></Route>
-      <Route path='/dashboard' element={<div>Dashboard</div>}></Route>
-      <Route path='/settings' element={<div>Settings</div>}></Route>
-    </Routes>
-  );
+  const routes = useRoutes([
+    {
+      path: "/",
+      element : <div>Home <Outlet></Outlet></div>,
+      children : [
+        {
+          index: true,
+          element : <div>Home Content</div>
+        },
+        {
+          path: "/login",
+          element : <div>Login</div>
+        },
+        {
+          path: "/dashboard",
+          element : <div>Dashboard</div>
+        },
+        {
+          path: "/settings",
+          element : <div>Settings</div>
+        }
+      ]
+    },
+  ]);
+
+  return routes;
 }
 
 export default App;
