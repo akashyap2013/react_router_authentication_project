@@ -1,8 +1,10 @@
 import { Outlet, Link } from "react-router-dom"
-
+import AuthConsumer from '../hooks/auth'
 /** All Components */
 
 export const HomePage = () => {
+    const auth = AuthConsumer();
+    console.log(auth)
     return (
         <main>
             <h1 className="text-center my-3 bg-yellow-400 text-gray-700 w-40 mx-auto rounded">Authentication</h1>
