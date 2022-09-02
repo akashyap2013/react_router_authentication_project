@@ -1,27 +1,34 @@
 import './App.css';
 import { useRoutes, Outlet } from 'react-router-dom'
+import  { 
+  LoginPage,
+  HomePage,
+  HomeContent,
+  Dashboard,
+  Settings
+} from './components/global'
 
 function App() {
   const routes = useRoutes([
     {
       path: "/",
-      element : <div>Home <Outlet></Outlet></div>,
+      element : <HomePage></HomePage>,
       children : [
         {
           index: true,
-          element : <div>Home Content</div>
+          element : <HomeContent></HomeContent>
         },
         {
           path: "/login",
-          element : <div>Login</div>
+          element : <LoginPage></LoginPage>
         },
         {
           path: "/dashboard",
-          element : <div>Dashboard</div>
+          element : <Dashboard></Dashboard>
         },
         {
           path: "/settings",
-          element : <div>Settings</div>
+          element : <Settings></Settings>
         }
       ]
     },
