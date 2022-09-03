@@ -1,10 +1,9 @@
-import { Outlet, Link } from "react-router-dom"
+import { Outlet, NavLink, useNavigate } from "react-router-dom"
 import AuthConsumer from '../hooks/auth'
 /** All Components */
 
 export const HomePage = () => {
     const  [authed, dispatch] = AuthConsumer();
-    console.log(authed)
     return (
         <main>
             <h1 className="text-center my-3 bg-yellow-400 text-gray-700 w-40 mx-auto rounded">Authentication</h1>
@@ -18,13 +17,14 @@ export const HomePage = () => {
 
 export const LoginPage = () => {
     const  [authed, dispatch] = AuthConsumer();
-    console.log(authed)
+    let navigate = useNavigate()
     return (
         <div>
             <h1>This is the Login Page</h1>
             <button className="broder px-5 bg-indigo-500 text-gray-50 rounded"
             onClick={() => {
                 dispatch({ type: "login"})
+                navigate('/dashboard', { replace : true})
             }}
             >Login</button>
         </div>
@@ -40,24 +40,38 @@ export const HomeContent = () => {
 }
 
 export const Nav = () => {
+
+    function ActiveLink(props){
+        return <NavLink 
+            style={({ isActive }) => {
+                return {
+                    color: isActive ? '#1d2d44': ''
+                };
+            }}
+            {...props}
+        />
+    }
+
     return (
        <nav className="flex bg-indigo-500 text-gray-50 gap-4 justify-center">
-            <Link to={'/'}>Home</Link> 
-            <Link to={'/login'}>Login</Link> 
-            <Link to={'/dashboard'}>Dashboard</Link> 
-            <Link to={'/settings'}>Settings</Link> 
+            <ActiveLink to={'/'}>Home</ActiveLink> 
+            <ActiveLink to={'/login'}>Login</ActiveLink> 
+            <ActiveLink to={'/dashboard'}>Dashboard</ActiveLink> 
+            <ActiveLink to={'/settings'}>Settings</ActiveLink> 
        </nav>
     )
 }
 
 export const Dashboard = () => {
     const  [,dispatch] = AuthConsumer();
+    let navigate = useNavigate()
     return (
         <div>
             <h1>This is the Dashboard Component</h1>
             <button className="broder px-5 bg-indigo-500 text-gray-50 rounded"
             onClick={() => {
                 dispatch({ type: "logout"})
+                navigate('/login', { replace : true})
             }}
             >Logout</button>
         </div>
@@ -65,9 +79,17 @@ export const Dashboard = () => {
 }
 
 export const Settings = () => {
+    const  [,dispatch] = AuthConsumer();
+    let navigate = useNavigate()
     return (
         <div>
-            <h1>Settings Component</h1>
+            <h1>This is the Settings Component</h1>
+            <button className="broder px-5 bg-indigo-500 text-gray-50 rounded"
+            onClick={() => {
+                dispatch({ type: "logout"})
+                navigate('/login', { replace : true})
+            }}
+            >Logout</button>
         </div>
     )
 }
