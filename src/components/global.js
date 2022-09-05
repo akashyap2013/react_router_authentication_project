@@ -1,5 +1,6 @@
 import { Outlet, NavLink, useNavigate, useLocation, Navigate } from "react-router-dom"
 import AuthConsumer from '../hooks/auth'
+import Route from "../routes/route";
 /** All Components */
 
 export const HomePage = () => {
@@ -17,7 +18,6 @@ export const HomePage = () => {
 
 export const LoginPage = () => {
     const  [authed, dispatch] = AuthConsumer();
-    console.log(authed)
     let navigate = useNavigate()
     return (
         <div>
@@ -43,7 +43,7 @@ export const HomeContent = () => {
 export const Nav = () => {
 
     const [{ auth }] = AuthConsumer()
-
+    let [ { children }] = Route
     function ActiveLink(props){
         return <NavLink 
             style={({ isActive }) => {
@@ -57,16 +57,22 @@ export const Nav = () => {
 
     return (
        <nav className="flex bg-indigo-500 text-gray-50 gap-4 justify-center">
-            <ActiveLink to={'/'}>Home</ActiveLink> 
-            <ActiveLink to={'/login'}>Login</ActiveLink> 
+            <ActiveLink to={'/'}>Home</ActiveLink>
             {
+                children.map((value, i) => (
+                    value.RouteName && value.protected === auth ? <ActiveLink key={i} to={value.path}>{value.RouteName}</ActiveLink> : false
+                ))
+            }
+            {/* <ActiveLink to={'/'}>Home</ActiveLink> 
+            <ActiveLink to={'/login'}>Login</ActiveLink>  */}
+            {/* {
                 auth ? (
                     <>
                         <ActiveLink to={'/dashboard'}>Dashboard</ActiveLink> 
                         <ActiveLink to={'/settings'}>Settings</ActiveLink> 
                     </>
                 ) : <></>
-            }
+            } */}
        </nav>
     )
 }
