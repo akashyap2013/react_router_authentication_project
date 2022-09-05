@@ -5,7 +5,8 @@ import  {
   HomePage,
   HomeContent,
   Dashboard,
-  Settings
+  Settings,
+  RequireAuth
 } from './components/global'
 
 function App() {
@@ -24,11 +25,11 @@ function App() {
         },
         {
           path: "/dashboard",
-          element : <Dashboard></Dashboard>
+          element : <RequireAuth><Dashboard /></RequireAuth> 
         },
         {
           path: "/settings",
-          element : <Settings></Settings>
+          element : <RequireAuth><Settings /></RequireAuth>
         }
       ]
     },
